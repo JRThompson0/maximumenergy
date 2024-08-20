@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootstrap Layout</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body class="void" style="background-color: #6581b5;">
+<!-- Header -->
+<header class="void">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary void">
+        <div class="container-fluid textLayingOnColor">
+            <p class="bebas-neue-regular navbar-brand textLayingOnColorB" href="#">
+                <img src="Images/MAXX-Energy-Logo-1A.png" alt="Logo" width="30" height="24" class="d-inline-block align-text-top" style="border-radius: 5px;">
+                Maxx Energy
+            </p>
+            <ul class="nav justify-content-end josefin-sans">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle textLayingOnColorB" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Account</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="login.html">Login</a></li>
+                        <li><a class="dropdown-item" href="register.html">Sign Up</a></li>
+                        <li><a class="dropdown-item" href="passReset.html">Reset Password</a></li>
+                    </ul>
+                <li class="nav-item">
+                    <a class="nav-link textLayingOnColorB" href="aboutUs.html">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link textLayingOnColorB" href="contactUs.html">Contact Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link textLayingOnColorB" href="FAQ.html">FAQ</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<div class="social-icons">
+    <ul>
+        <li>
+            <a class="facebook" href="#">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <i class="fa fa-facebook" aria-hidden="true"></i>
+            </a>
+        </li>
+        <li>
+            <a class="twitter" href="#">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <i class="fa fa-twitter" aria-hidden="true"></i>
+            </a>
+        </li>
+        <li>
+            <a class="instagram" href="#">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <i class="fa fa-instagram" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+<!-- Main Content -->
+<main class="container text-center my-4">
+
+    <div class="container py-6 hero">
+        <div class="row flex-lg-row-reverse align-items-center g-5">
+            <div class="col-10 mx-auto col-sm-8 col-lg-6">
+                <div class="logo-stack">
+                    <div class="logo"></div>
+                    <div class="logo"></div>
+                    <div class="logo">
+                        <div class="carousel">
+                            <div class="carousel-slide">
+                                <img src="Images/AdobeStock_369434840.jpeg" alt="Slide 1">
+                                <img src="Images/AdobeStock_730734680.jpeg" alt="Slide 2">
+                                <img src="Images/AdobeStock_80511892.jpeg" alt="Slide 3">
+                                <img src="Images/AdobeStock_809523421.jpeg" alt="Slide 4">
+                            </div>
+                        </div>
+
+                        <img src="Images/MAXX-Energy-Logo-1A.png" style="height: 30px; width: 30px; position: absolute; bottom: 55px; left: 50px;"> <h2 class="bebas-neue-regular" style="color: #fcaf17; position: absolute; bottom: 40px; left: 90px;">Maxx</h2>
+                        <h3 class="bebas-neue-regular" style="color: #fcaf17; position: absolute; bottom: 40px; left: 340px;">#SolarPower</h3>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="col-lg-6" style="text-align: left;">
+                <div class="lc-block mb-3">
+                    <div editable="rich">
+                        <h6 class="josefin-sans">Maxx Energy</h6>
+                        <h2 class="bebas-neue-regular display-5">Energy Solutions:</h2>
+                    </div>
+                </div>
+
+                <div class="lc-block mb-3">
+                    <div editable="rich">
+                        <h2 class="bebas-neue-regular display-5">Energy Reinvisioned, Reimagined, Reinvented; For The New Future</h2>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+</main>
+
+</div>
+
+<!-- Footer -->
+
+<footer class="footer mt-auto bg-dark text-white py-3">
+    <div class="container text-center">
+        <div class="social-media mb-2">
+            <a href="https://www.facebook.com" target="_blank">
+                <img src="images/facebook-icon.png" alt="Facebook">
+            </a>
+            <a href="https://www.twitter.com" target="_blank">
+                <img src="Images/twitter-icon.png" alt="Twitter">
+            </a>
+            <a href="https://www.instagram.com" target="_blank">
+                <img src="images/instagram-icon.png" alt="Instagram">
+            </a>
+        </div>
+        <p>&copy; 2024 MAXX Energy. All rights reserved.</p>
+        <p><a href="privacy.html" class="text-white">Privacy Policy</a> | <a href="terms.html" class="text-white">Terms of Service</a></p>
+    </div>
+</footer>
+
+<!-- Bootstrap JS (optional) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
