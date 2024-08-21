@@ -21,13 +21,4 @@ public class DemoController
         modelAndView.addObject("user", user);
         return modelAndView;
     }
-    @Controller
-    public class WelcomeController {
-        @RequestMapping("/welcome")
-        public String loginMessage(){
-            return "welcome";
-        }
-    }
-
-
 }  
