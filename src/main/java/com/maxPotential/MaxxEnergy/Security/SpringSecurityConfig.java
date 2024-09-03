@@ -19,62 +19,112 @@
  */
 package com.maxPotential.MaxxEnergy.Security;
 
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.ObjectPostProcessor;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+
+@EnableWebSecurity
 @Configuration
 @ComponentScan
-@EnableWebSecurity
-public class SpringSecurityConfig {
+public class SpringSecurityConfig
+{
 
-    public SpringSecurityConfig() {
-        super();
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        {
+            http
+                    .authorizeHttpRequests(authz -> authz
+                            .requestMatchers("/**").hasRole("USER")
+                            .requestMatchers("/index").permitAll()
+                            .requestMatchers("/public/**").permitAll()
+                            .requestMatchers("/admin/**").hasRole("ADMIN")
+                            .requestMatchers("/employee/**").hasRole("EMPLOYEE")
+                            .anyRequest().authenticated())
+                    .formLogin((formLogin) ->
+                            formLogin
+                                    .usernameParameter("username")
+                                    .passwordParameter("password")
+                                    .loginPage("/login")
+                                    .failureUrl("/authentication/login?failed")
+                                    .loginProcessingUrl("/authentication/login/process")
+                                    .permitAll()
+                    )
+                    .logout((logout) -> logout
+                            .logoutSuccessUrl("/index")
+                            .permitAll()
+                            .deleteCookies("remove")
+                            .invalidateHttpSession(false)
+                            .permitAll());
+            return http.build();
+        }
+    }
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public SecurityFilterChain filterChain(final HttpSecurity http) throws Exception {
-        http
-            .formLogin(formLogin -> formLogin
-                    .loginPage("/login.html")
-                    .failureUrl("/login-error.html"))
-            .logout(logout -> logout
-                    .logoutSuccessUrl("/index.html"))
-            .authorizeHttpRequests(authorize -> authorize
-                    .requestMatchers(
-                            new AntPathRequestMatcher("/"),
-                            new AntPathRequestMatcher("/index"),
-                            new AntPathRequestMatcher("/login"),
-                            new AntPathRequestMatcher("/css/**"),
-                            new AntPathRequestMatcher("/favicon.ico")).permitAll()
-                    .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN")
-                    .requestMatchers(new AntPathRequestMatcher("/user/**")).hasRole("USER")
-                    .requestMatchers(new AntPathRequestMatcher("/shared/**")).hasAnyRole("USER","ADMIN")
-                    .anyRequest().authenticated())
-            .exceptionHandling(handling -> handling
-                    .accessDeniedPage("/403.html"));
-        return http.build();
-    }
-
-
-    @Bean
-    public InMemoryUserDetailsManager userDetailsServiceTest() {
-        return new InMemoryUserDetailsManager(
-                User.withUsername("jim").password("{noop}demo").roles("USER").build(),
-                User.withUsername("bob").password("{noop}demo").roles("USER","EMPLOYEE").build(),
-                User.withUsername("ted").password("{noop}demo").roles("USER","EMPLOYEE","ADMIN").build());
-    }
-
-   /* @Bean
     public UserDetailsService userDetailsService() {
-        return new CustomUserDetailsService();
+        return new InMemoryUserDetailsManager(User.withUsername("jim").password("{bcrypt}demo").roles("USER").build(),
+                User.withUsername("bob").password("{bcrypt}demo").roles("USER","EMPLOYEE").build(),
+                User.withUsername("ted").password("{bcrypt}demo").roles("USER","EMPLOYEE","ADMIN").build()
+        );
     }
-    */
+    @Bean
+    public AuthenticationManager authenticationManager(HttpSecurity http, AuthenticationConfiguration authConfig) throws Exception {
+    // Create AuthenticationManagerBuilder with AuthenticationConfiguration
+    AuthenticationManagerBuilder authenticationManagerBuilder =
+            new AuthenticationManagerBuilder(authConfig);
+
+    authenticationManagerBuilder
+            .inMemoryAuthentication()
+            .withUser("user").password(passwordEncoder().encode("password")).roles("USER", "EMPLOYEE")
+            .and()
+            .withUser("gladmin").password(passwordEncoder().encode("emp")).roles("USER", "EMPLOYEE")
+            .and()
+            .withUser("admin").password(passwordEncoder().encode("admin")).roles("ADMIN", "EMPLOYEE", "USER");
+
+    return authenticationManagerBuilder.build();
 }
+
+
+
+}
+
+//
+//    @Bean
+//    @Override
+//    public UserDetailsService userDetailsService() {
+//        InMemoryUserDetailsManager builder = new InMemoryUserDetailsManager();
+//        builder().withUser("user")
+//                .password(passwordEncoder().encode("password"))
+//                .roles("USER")
+//                .and()
+//                .withUser("Emploe")
+//                .password(passwordEncoder().encode("emploe"))
+//                .roles("USER", "EMPLOYEE");
+//                .withUser("admin")
+//                .password(passwordEncoder().encode("admin"))
+//                .roles("USER", "EMPLOYEE","ADMIN");
+//        return builder.build();
+//    }
+//
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
+

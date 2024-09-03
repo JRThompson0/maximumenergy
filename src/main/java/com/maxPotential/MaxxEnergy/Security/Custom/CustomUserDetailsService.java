@@ -1,4 +1,4 @@
-package com.maxPotential.MaxxEnergy.Security;
+package com.maxPotential.MaxxEnergy.Security.Custom;
 
 import com.maxPotential.MaxxEnergy.Business.Model.Role;
 import com.maxPotential.MaxxEnergy.Business.Model.User;
