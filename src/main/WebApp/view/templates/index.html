@@ -6,7 +6,7 @@
     <title>Bootstrap Layout</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/main.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;display=swap" rel="stylesheet">
@@ -17,11 +17,21 @@
 
 </head>
 <body class="void" style="background-color: #6581b5;">
-<div sec:authorize="hasAuthority(&quot;ADMIN&quot;)">This content is only shown
-    to administrators.§§</div>
 
-<div sec:authorize="hasAuthority(&quot;USERS&quot;)">This content is only shown
-    to USERS.§§</div>
+
+
+
+<span sec:authentication="principal.firstName"></span>
+<div sec:authorize="isAuthenticated()">
+    This content is only shown to authenticated users.
+</div>
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+    This content is only shown to administrators.
+</div>
+<div sec:authorize="hasRole('ROLE_USER')">
+    This content is only shown to users.
+</div>
+
 <!-- Header -->
 <header class="void">
     <nav class="navbar navbar-expand-lg bg-body-tertiary void">

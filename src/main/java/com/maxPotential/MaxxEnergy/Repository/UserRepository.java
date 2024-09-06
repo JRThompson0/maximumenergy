@@ -1,7 +1,7 @@
-package com.maxPotential.MaxxEnergy.Business.Repository;
+package com.maxPotential.MaxxEnergy.Repository;
 
 
-import com.maxPotential.MaxxEnergy.Business.Model.User;
+import com.maxPotential.MaxxEnergy.Model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Long> {

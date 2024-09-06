@@ -1,7 +1,7 @@
-package com.maxPotential.MaxxEnergy.Business.Repository;
+package com.maxPotential.MaxxEnergy.Repository;
 
 
-import com.maxPotential.MaxxEnergy.Business.Model.Role;
+import com.maxPotential.MaxxEnergy.Model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

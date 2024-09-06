@@ -1,4 +1,4 @@
-package com.maxPotential.MaxxEnergy.Business.Model;
+package com.maxPotential.MaxxEnergy.Model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
