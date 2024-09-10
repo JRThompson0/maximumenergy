@@ -28,6 +28,11 @@ public class PublicController
         model.addAttribute("loginError", true);
         return "login";
     }
+    @RequestMapping("/logout")
+    public String logout()
+    {
+        return "logout";
+    }
     @RequestMapping("/error")
     public String error(HttpServletRequest request, Model model) {
         model.addAttribute("errorCode", "Error " + request.getAttribute("javax.servlet.error.status_code"));

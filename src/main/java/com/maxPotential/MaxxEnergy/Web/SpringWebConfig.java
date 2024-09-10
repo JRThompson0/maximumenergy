@@ -13,6 +13,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.thymeleaf.extras.springsecurity6.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring6.view.ThymeleafViewResolver;
@@ -110,6 +111,7 @@ public class SpringWebConfig implements WebMvcConfigurer, ApplicationContextAwar
         // SpringTemplateEngine automatically applies SpringStandardDialect and
         // enables Spring's own MessageSource message resolution mechanisms.
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+        templateEngine.addDialect(new SpringSecurityDialect());
         templateEngine.setTemplateResolver(templateResolver());
         // Enabling the SpringEL compiler with Spring 4.2.4 or newer can
         // speed up execution in most scenarios, but might be incompatible

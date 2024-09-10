@@ -19,18 +19,27 @@
 <body class="void" style="background-color: #6581b5;">
 
 
-
-
-<span sec:authentication="principal.firstName"></span>
+<div sec:authorize="!isAuthenticated()">
+    <p>Please log in to access more features.</p>
+</div>
 <div sec:authorize="isAuthenticated()">
     This content is only shown to authenticated users.
+    Welcome, <span th:text="${#authentication.principal.username}">User</span>!
+    <div sec:authorize="hasRole('ROLE_ADMIN')">
+        This content is only shown to administrators.
+    </div>
+    <div sec:authorize="hasRole('ROLE_USER')">
+        This content is only shown to people with the user role
+    </div>
+    <div sec:authorize="hasRole('ROLE_ADMIN')">
+        This content is only shown to people with the admin role
+    </div>
+    <div sec:authorize="hasRole('ROLE_EMPLOYEE')">
+        This content is only shown to people with the admin role
+    </div>
+    <a href="#" th:href="@{/logout}">Log Out</a>
 </div>
-<div sec:authorize="hasRole('ROLE_ADMIN')">
-    This content is only shown to administrators.
-</div>
-<div sec:authorize="hasRole('ROLE_USER')">
-    This content is only shown to users.
-</div>
+
 
 <!-- Header -->
 <header class="void">

@@ -60,10 +60,10 @@ public class SpringSecurityConfig {
                                     .permitAll()
                     )
                     .logout((logout) -> logout
-                            .logoutSuccessUrl("/index")
-                            .permitAll()
+                            .logoutUrl("/logout")
+                            .logoutSuccessUrl("/login?logout")
                             .deleteCookies("remove")
-                            .invalidateHttpSession(false)
+                            .invalidateHttpSession(true)
                             .permitAll())
                     .exceptionHandling(handling -> handling
                             .accessDeniedPage("/403.html"));
