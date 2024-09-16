@@ -20,13 +20,15 @@
 package com.maxPotential.MaxxEnergy.Security;
 
 
+import com.maxPotential.MaxxEnergy.Web.Service.UserDetailsServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 
@@ -34,8 +36,14 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @ComponentScan
 public class SpringSecurityConfig {
-    public SpringSecurityConfig() {
-        super();
+
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
+
+    @Bean
+    public PasswordEncoder passwordEncoder()
+    {
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
@@ -43,13 +51,14 @@ public class SpringSecurityConfig {
         {
             http
                     .authorizeHttpRequests(authz -> authz
-                            .requestMatchers("/**").permitAll()
-                            .requestMatchers("/index").permitAll()
-                            .requestMatchers("/public/**").permitAll()
-                            .requestMatchers("/favicon.ico").permitAll()
                             .requestMatchers("/admin/**").hasRole("ADMIN")
                             .requestMatchers("/employee/**").hasRole("EMPLOYEE")
                             .requestMatchers("/user/**").hasRole("USER")
+                            .requestMatchers("/**").permitAll()
+                            .requestMatchers("/index").permitAll()
+                            .requestMatchers("/public/**").permitAll()
+                            .requestMatchers("/registered").permitAll()
+                            .requestMatchers("/favicon.ico").permitAll()
                             .anyRequest().authenticated())
                     .formLogin((formLogin) ->
                             formLogin
@@ -70,65 +79,12 @@ public class SpringSecurityConfig {
             return http.build();
         }
     }
-
-    @Bean
-    public InMemoryUserDetailsManager userDetailsService() {
-        return new InMemoryUserDetailsManager(
-                User.withUsername("jim").password("{noop}demo").roles("ADMIN").build(),
-                User.withUsername("bob").password("{noop}demo").roles("USER").build(),
-                User.withUsername("ted").password("{noop}demo").roles("USER", "ADMIN").build());
-    }
-
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
-//
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//        return new InMemoryUserDetailsManager(User.withUsername("jim").password("{bcrypt}demo").roles("USER").build(),
-//                User.withUsername("bob").password("{bcrypt}demo").roles("USER","EMPLOYEE").build(),
-//                User.withUsername("ted").password("{bcrypt}demo").roles("USER","EMPLOYEE","ADMIN").build()
-//        );
-//    }
-//    @Bean
-//    public AuthenticationManager authenticationManager(HttpSecurity http, AuthenticationConfiguration authConfig) throws Exception {
-//    // Create AuthenticationManagerBuilder with AuthenticationConfiguration
-//    AuthenticationManagerBuilder authenticationManagerBuilder =
-//            new AuthenticationManagerBuilder(authConig);
-//
-//    authenticationManagerBuilder
-//            .inMemoryAuthentication()
-//            .withUser("user").password(passwordEncoder().encode("password")).roles("USER", "EMPLOYEE")
-//            .and()
-//            .withUser("gladmin").password(passwordEncoder().encode("emp")).roles("USER", "EMPLOYEE")
-//            .and()
-//            .withUser("admin").password(passwordEncoder().encode("admin")).roles("ADMIN", "EMPLOYEE", "USER");
-//
-//    return authenticationManagerBuilder.build();
-//    }
+//        @Bean
+//        public InMemoryUserDetailsManager userDetailsServiceTest() {
+//            return new InMemoryUserDetailsManager(
+//                    User.withUsername("jim").password("{noop}demo").roles("ADMIN").build(),
+//                    User.withUsername("bob").password("{noop}demo").roles("USER").build(),
+//                    User.withUsername("ted").password("{noop}demo").roles("USER", "ADMIN").build());
+//        }
 }
-
-//
-//    @Bean
-//    @Override
-//    public UserDetailsService userDetailsService() {
-//        InMemoryUserDetailsManager builder = new InMemoryUserDetailsManager();
-//        builder().withUser("user")
-//                .password(passwordEncoder().encode("password"))
-//                .roles("USER")
-//                .and()
-//                .withUser("Emploe")
-//                .password(passwordEncoder().encode("emploe"))
-//                .roles("USER", "EMPLOYEE");
-//                .withUser("admin")
-//                .password(passwordEncoder().encode("admin"))
-//                .roles("USER", "EMPLOYEE","ADMIN");
-//        return builder.build();
-//    }
-//
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
 

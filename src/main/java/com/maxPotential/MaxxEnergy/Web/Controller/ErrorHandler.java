@@ -19,27 +19,31 @@
  */
 package com.maxPotential.MaxxEnergy.Web.Controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
+import org.springframework.boot.web.servlet.error.ErrorController;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.unbescape.html.HtmlEscape;
 
-@ControllerAdvice
-public class ErrorHandler {
+@Controller
+public class ErrorHandler implements ErrorController {
 
     private static final Logger logger = LoggerFactory.getLogger(ErrorHandler.class);
-
-    @ExceptionHandler(Throwable.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public String exception(final Throwable throwable, final Model model) {
-        logger.error("Exception during execution of SpringSecurity application", throwable);
-        String errorMessage = (throwable != null ? throwable.getMessage() : "Unknown error");
-        model.addAttribute("errorMessage", errorMessage);
-        model.addAttribute("httpStatus", HttpStatus.INTERNAL_SERVER_ERROR);
+    @GetMapping("/error")
+    public String error(HttpServletRequest request, Model model) {
+        model.addAttribute("errorCode", "Error " + request.getAttribute("javax.servlet.error.status_code"));
+        Throwable throwable = (Throwable) request.getAttribute("javax.servlet.error.exception");
+        StringBuilder errorMessage = new StringBuilder();
+        errorMessage.append("<ul>");
+        while (throwable != null) {
+            errorMessage.append("<li>").append(HtmlEscape.escapeHtml5(throwable.getMessage())).append("</li>");
+            throwable = throwable.getCause();
+        }
+        errorMessage.append("</ul>");
+        model.addAttribute("errorMessage", errorMessage.toString());
         return "error";
     }
-
 }

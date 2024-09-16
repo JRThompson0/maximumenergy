@@ -1,14 +1,13 @@
 package com.maxPotential.MaxxEnergy.Web;
 
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
+import org.springframework.boot.autoconfigure.web.servlet.error.ErrorViewResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.format.datetime.DateFormatter;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
@@ -22,16 +21,11 @@ import org.thymeleaf.templatemode.TemplateMode;
 @Configuration
 @EnableWebMvc
 @ComponentScan
-public class SpringWebConfig implements WebMvcConfigurer, ApplicationContextAware
+public class SpringWebConfig implements WebMvcConfigurer
 {
-    ApplicationContext applicationContext;
 
     public SpringWebConfig() {
         super();
-    }
-    public void setApplicationContext(final ApplicationContext applicationContext)
-            throws BeansException {
-        this.applicationContext = applicationContext;
     }
 
     /* ******************************************************************* */
@@ -51,11 +45,9 @@ public class SpringWebConfig implements WebMvcConfigurer, ApplicationContextAwar
         registry.addResourceHandler("/js/**").addResourceLocations("/js/");
         registry.addResourceHandler("/view/templates/**").addResourceLocations("/view/templates");
     }
-    public void addViewControllers(ViewControllerRegistry registry) {
+    public void addViewControllers(ViewControllerRegistry registry)
+    {
         registry.addViewController("/index").setViewName("index");
-        registry.addViewController("/").setViewName("index");
-        registry.addViewController("/login").setViewName("login");
-        registry.addViewController("/error").setViewName("error");
     }
 
     /*
@@ -95,7 +87,6 @@ public class SpringWebConfig implements WebMvcConfigurer, ApplicationContextAwar
         // SpringResourceTemplateResolver automatically integrates with Spring's own
         // resource resolution infrastructure, which is highly recommended.
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
-        templateResolver.setApplicationContext(this.applicationContext);
         templateResolver.setPrefix("/view/templates/");
         templateResolver.setSuffix(".html");
         // HTML is the default value, added here for the sake of clarity.
@@ -128,4 +119,19 @@ public class SpringWebConfig implements WebMvcConfigurer, ApplicationContextAwar
         viewResolver.setTemplateEngine(templateEngine());
         return viewResolver;
     }
+    @Bean
+    public ErrorViewResolver resolveErrorView() {
+        return (request, status, model) -> {
+            String viewName;
+            if (status.value() == 404) {
+                viewName = "error/404"; // Make sure this matches your template name
+            } else if (status.value() == 500) {
+                viewName = "error/500"; // Make sure this matches your template name
+            } else {
+                viewName = "error"; // Default error page
+            }
+            return new ModelAndView(viewName, model);
+        };
+    }
+
 }

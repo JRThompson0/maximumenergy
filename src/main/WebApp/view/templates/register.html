@@ -1,25 +1,62 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="ISO-8859-1">
-    <title>User Registration</title>
+    <title th:text="#{label.form.title}">Register</title>
+    <style>
+        .password-container {
+            position: relative;
+        }
+        .toggle-visibility {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            cursor: pointer;
+            transform: translateY(-50%);
+        }
+    </style>
 </head>
 <body>
-<div align="center">
-    <h1>User Registration</h1>
-    <form action="#" th:action="@{/add}" method="post" th:object="${user}">
-        <label>Name:</label>
-        <input type="text" th:field="*{name}" /><br/>
+<h1 >form</h1>
+<form th:action="@{/register}" th:object="${user}" method="post">
+    <div>
+        <label th:text="#{label.user.username}">Username</label>
+        <input th:field="*{username}"/>
+        <p th:each="error: ${#fields.errors('username')}"
+           th:text="${error}">Validation error</p>
+    </div>
+    <div>
+        <label th:text="#{label.user.name}">Name</label>
+        <input th:field="*{name}"/>
+        <p th:each="error: ${#fields.errors('name')}"
+           th:text="${error}">Validation error</p>
+    </div>
+    <div>
+        <label th:text="#{label.user.email}">Email</label>
+        <input type="email" th:field="*{email}"/>
+        <p th:each="error : ${#fields.errors('email')}"
+           th:text="${error}">Validation error</p>
+    </div>
+    <div>
+        <label th:text="#{label.user.password}">Password</label>
+        <input type="password" th:field="*{password}"/>
+        <p th:each="error : ${#fields.errors('password')}"
+           th:text="${error}">Validation error</p>
+        <input type="checkbox" onclick="showPassword()">Show Password
+    </div>
 
-        <label>Email:</label>
-        <input type="email" th:field="*{email}" /><br/>
-
-        <label>Password:</label>
-        <input type="password" th:field="*{password}" /><br/>
-
-        <button type="submit">Register</button>
-    </form>
-    <p>already registered ? <a th:href="@{/login}" class="btn btn-primary btn-sm mb-3"> Login</a></p>
-</div>
-
+    <button type="submit" th:text="#{label.form.submit}">submit</button>
+</form>
+<a th:href="@{/login.html}" th:text="#{label.form.loginLink}">login</a>
+<script>
+    function showPassword() {
+        var passwordField = document.querySelector('input[type="password"]');
+        var checkbox = document.querySelector('input[type="checkbox"]');
+        if (checkbox.checked) {
+            passwordField.type = 'text';
+        } else {
+            passwordField.type = 'password';
+        }
+    }
+</script>
 </body>
 </html>

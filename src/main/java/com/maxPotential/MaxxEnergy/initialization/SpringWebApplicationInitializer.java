@@ -1,5 +1,6 @@
-package com.maxPotential.MaxxEnergy;
+package com.maxPotential.MaxxEnergy.initialization;
 
+import com.maxPotential.MaxxEnergy.ApplicationConfiguration;
 import jakarta.servlet.Filter;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.filter.CharacterEncodingFilter;

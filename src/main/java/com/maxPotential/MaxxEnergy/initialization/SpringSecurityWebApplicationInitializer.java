@@ -1,4 +1,4 @@
-package com.maxPotential.MaxxEnergy;
+package com.maxPotential.MaxxEnergy.initialization;
 
 import org.springframework.core.annotation.Order;
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;

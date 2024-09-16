@@ -1,0 +1,51 @@
+spring:
+  application:
+    name: MaxxEnergy
+  jpa:
+    hibernate:
+      ddl-auto: validate
+      dialect: org.hibernate.dialect.MySQL8Dialect
+      defer-datasource-initialization: true
+      show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+  data:
+    jpa:
+      repositories:
+        enabled: true
+  datasource:
+    schema: classpath:schema.sql
+    data: classpath:data.sql
+    url: jdbc:mysql://localhost:3306/maxxenergy
+    username: root
+    password: 19014
+    initialization-mode: always
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  logging:
+    level:
+      root: DEBUG
+      org.springframework: DEBUG
+      org.springframework.security: DEBUG
+      org.hibernate: DEBUG
+      com.maxxenergy: DEBUG
+  thymeleaf:
+    prefix: classpath:view/templates/
+    suffix: .html
+    cache: false
+    check-template-location: true
+    check-template: true
+    enabled: true
+  main:
+    allow-bean-definition-overriding: true
+  server:
+    error:
+      path: /error
+      whitelabel:
+        enabled: false
+  sql:
+    init:
+      mode: always
+      continue-on-error: true
+      separator: ;
