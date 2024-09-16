@@ -12,7 +12,10 @@
     <div th:if="${param.logout}">
         You have been logged out.
     </div>
-    <label for="username">Email:</label>
+    <div th:if="${param.registrationComplete}">
+        New user registered!
+    </div>
+    <label for="username">Username:</label>
     <input type="text" id="username" name="username"><br>
     <label for="password">Password:</label>
     <input type="password" id="password" name="password"><br>

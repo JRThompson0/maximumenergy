@@ -25,14 +25,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.unbescape.html.HtmlEscape;
 
 @Controller
 public class ErrorHandler implements ErrorController {
 
     private static final Logger logger = LoggerFactory.getLogger(ErrorHandler.class);
-    @GetMapping("/error")
+    @RequestMapping({"/error","/403","/404","/500"})
     public String error(HttpServletRequest request, Model model) {
         model.addAttribute("errorCode", "Error " + request.getAttribute("javax.servlet.error.status_code"));
         Throwable throwable = (Throwable) request.getAttribute("javax.servlet.error.exception");

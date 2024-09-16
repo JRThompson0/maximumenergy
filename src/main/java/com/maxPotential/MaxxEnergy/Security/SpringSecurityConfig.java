@@ -40,6 +40,7 @@ public class SpringSecurityConfig {
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
+    private PasswordEncoder passwordEncoder;
     @Bean
     public PasswordEncoder passwordEncoder()
     {
@@ -65,7 +66,8 @@ public class SpringSecurityConfig {
                                     .usernameParameter("username")
                                     .passwordParameter("password")
                                     .loginPage("/login")
-                                    .failureUrl("/login-error")
+                                    .defaultSuccessUrl("/home", true) // Redirect after successful login
+                                    .failureUrl("/login?error=true")
                                     .permitAll()
                     )
                     .logout((logout) -> logout
@@ -75,10 +77,11 @@ public class SpringSecurityConfig {
                             .invalidateHttpSession(true)
                             .permitAll())
                     .exceptionHandling(handling -> handling
-                            .accessDeniedPage("/403.html"));
+                            .accessDeniedPage("/403"));
             return http.build();
         }
     }
+
 //        @Bean
 //        public InMemoryUserDetailsManager userDetailsServiceTest() {
 //            return new InMemoryUserDetailsManager(

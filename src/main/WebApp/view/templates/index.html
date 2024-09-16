@@ -53,7 +53,16 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle textLayingOnColorB" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Account</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" th:href="@{/login}">Login</a></li>
+                        <li>
+                            <div sec:authorize="!isAuthenticated()">
+                            <a class="dropdown-item" th:href="@{/login}">Login</a>
+                            </div>
+                            <!-- Display logout form if the user is authenticated -->
+                            <div sec:authorize="isAuthenticated()">
+                                <form th:action="@{/logout}" method="post" class="dropdown-item">
+                                    <button type="submit" class="btn btn-link">Logout</button>
+                                </form>
+                            </div></li>
                         <li><a class="dropdown-item" th:href="@{register}">Sign Up</a></li>
                         <li><a class="dropdown-item" href="passReset.html">Reset Password</a></li>
                     </ul>

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class PublicController
 {
-    @GetMapping("/index")
+    @GetMapping({"/index","/","/home"})
     public String index(Model model) {
         return "index";  // This is the view name (e.g., a Thymeleaf template called 'index.html')
     }
@@ -20,12 +20,6 @@ public class PublicController
     }
 
     /** Login form with error attribute added.. */
-    @RequestMapping("/login-error")
-    public String loginError(Model model)
-    {
-        model.addAttribute("loginError", true);
-        return "login";
-    }
     @RequestMapping("/logout")
     public String logout()
     {

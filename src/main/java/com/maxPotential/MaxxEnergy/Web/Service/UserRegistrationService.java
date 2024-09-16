@@ -7,6 +7,7 @@ import com.maxPotential.MaxxEnergy.Repository.RoleRepository;
 import com.maxPotential.MaxxEnergy.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +18,8 @@ public class UserRegistrationService
 {
     @Autowired
     private UserRepository userRepository;
+
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     @Autowired
     private RoleRepository roleRepository;
     public void createNewUser(User user) throws DuplicateUserException
@@ -29,6 +32,8 @@ public class UserRegistrationService
         if (existingUser.isPresent()) {
             throw new DuplicateUserException("Username is already in use!");
         }
+        //encodes the received password if and only if the username and email are not present in the database
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
