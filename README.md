@@ -24,7 +24,6 @@ To make part of a page only viewable for a certain role using namespaces, one ca
     <div sec:authorize="hasRole('ROLE_EMPLOYEE')">
         This content is only shown to people with the admin role
     </div>
-    <a href="#" th:href="@{/logout}">Log Out</a>
 </div>
 ```
   
