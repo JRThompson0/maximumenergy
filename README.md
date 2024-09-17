@@ -1,5 +1,5 @@
 #### Basic backend with room to increase granularity of permissions. 
-  Currently divided into ROLE_USER, ROLE_GUEST, ROLE_EMPLOYEE, and ROLE_ADMIN, though the role repository is not static, which allows relatively simple creation of new roles.
+  Currently divided into ROLE_USER, ROLE_GUEST, ROLE_EMPLOYEE, and ROLE_ADMIN, though the role repository is not static, which allows relatively simple creation of new roles. Site users are separately stored from employee data to reduce risk of data breach. 
   
 #### Current Permissions  
 Very simple. Currently if a url is under /users/,** it requires user permission to view-same with employee and /employee/** as well as admin and /admin/**. This can be pretty extensively customized through a combination of namespace and the securityFilterChain, but there's not enough web pages to hide them all just yet.
