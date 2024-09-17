@@ -1,8 +1,5 @@
 #### Basic backend with room to increase granularity of permissions. 
-  Currently divided into ROLE_USER, ROLE_GUEST, ROLE_EMPLOYEE, and ROLE_ADMIN, though the role repository is not static. 
-  
-  
-  
+  Currently divided into ROLE_USER, ROLE_GUEST, ROLE_EMPLOYEE, and ROLE_ADMIN, though the role repository is not static, which allows relatively simple creation of new roles.
   
 #### Current Permissions  
 Very simple. Currently if a url is under /users/,** it requires user permission to view-same with employee and /employee/** as well as admin and /admin/**. 
@@ -43,3 +40,11 @@ WHERE NOT EXISTS (
 );
 ```
 This will create a role that can be associated with certain filepaths in the SpringSecurityConfig using the security filter chain, or certain parts of a webpage using html namespaces.
+
+#### Adding the Role to the securityChain
+On the security filter chain, you can associate certain roles with certain paths and path patterns such that only certain roles can view things under certain paths. 
+
+```
+.requestMatchers("/admin/**").hasRole("ADMIN")
+```
+the hasRole() and hasAnyRole() methods both prepend "ROLE_" from the roles in the role repository.
