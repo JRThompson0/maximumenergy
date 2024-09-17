@@ -46,7 +46,7 @@ On the security filter chain, you can associate certain roles with certain paths
 ```
 .requestMatchers("/admin/**").hasRole("ADMIN")
 ```
-the hasRole() and hasAnyRole() methods both prepend "ROLE_" from the roles in the role repository.
+the hasRole() and hasAnyRole() methods both prepend "ROLE_" from the roles in the role repository, hence its absence  in the above code block.
 
 
 #### Dependency List:
